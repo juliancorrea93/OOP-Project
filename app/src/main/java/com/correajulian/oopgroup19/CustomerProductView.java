@@ -70,6 +70,9 @@ public class CustomerProductView extends AppCompatActivity {
                 startActivity(intent);
             });
             addItem.setOnClickListener(v -> {
+                Product p = new Product(items.get(position));
+                sc.addNewItem(p);
+                System.out.println(sc.getItemList());
                 Toast.makeText(getApplicationContext(), name.getText() + " has been added to cart", Toast.LENGTH_LONG).show();
             });
             try {
@@ -92,23 +95,32 @@ public class CustomerProductView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_product_view);
 
-        String user = getIntent().getExtras().getString("user");
-        //user.printUserInfo();
-        String[] userinfo = user.split(",");
-        Customer customer = new Customer(userinfo);
-        System.out.println(customer.toString());
+        String seller = getIntent().getExtras().getString("seller");
 
         lv = findViewById(R.id.listView);
 
         ArrayList<Product> products = new ArrayList<>();
 
+        sc = new ShoppingCart();
+
+        //read in products here
         Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
-        Product p2 = new Product("Detergent", 21, "detergent.jpg", "Tide");
-        Product p3 = new Product("Hot Sauce", 5, "hotsauce.jpg", "Fran");
+        Product p2 = new Product("Detergent", 21, "detergent.jpg", "Amazon");
+        Product p4 = new Product("Hot Sauce", 5 , "hotsauce.jpg", "Amazon");
+        //next shouldn't be shown
+        Product p3 = new Product("Dog", 250, "jake.jpg", "Fran Dog Breeder");
 
         products.add(p1);
         products.add(p2);
         products.add(p3);
+        products.add(p4);
+
+        for (int i = 0; i < products.size(); i++) {
+            if (!products.get(i).getSeller().equals(seller)) {
+                System.out.println("Removing " + products.get(i).getName());
+                products.remove(i);
+            }
+        }
 
         ProductViewAdapter adapter = new ProductViewAdapter(getApplicationContext(), products);
         lv.setAdapter(adapter);
