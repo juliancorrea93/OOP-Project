@@ -23,8 +23,9 @@ public class ShoppingCart implements Serializable {
             Float f = items.get(i).getPrice();
             products.add(items.get(i).getName() + " $" + f.toString() + " Quantity: " + quantities.get(i));
         }
+        Float f = getTotal();
 
-        return products.toString();
+        return products.toString() + "\nTotal: $" + f.toString();
     }
     protected boolean addNewItem(Product product, int quantity) {
         if (!this.items.isEmpty()) {
@@ -62,6 +63,10 @@ public class ShoppingCart implements Serializable {
                 return items.add(product);
             }
         }
+    }
+    public void clearCart() {
+        items.clear();
+        quantities.clear();
     }
     private ArrayList<Product> items;
     private ArrayList<Integer> quantities;

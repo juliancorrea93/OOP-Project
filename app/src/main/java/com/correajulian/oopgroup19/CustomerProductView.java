@@ -29,6 +29,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
 
     private ListView lv;
     private ShoppingCart sc;
+    Button checkOut;
 
     class ProductViewAdapter extends ArrayAdapter<Product> {
         Context context;
@@ -104,7 +105,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         ArrayList<Product> products = new ArrayList<>();
 
         sc = new ShoppingCart();
-
+        checkOut = findViewById(R.id.checkout);
         //read in products here
         Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
         Product p2 = new Product("Detergent", 21, "detergent.jpg", "Amazon");
@@ -126,7 +127,11 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
 
         ProductViewAdapter adapter = new ProductViewAdapter(getApplicationContext(), products);
         lv.setAdapter(adapter);
-
+        checkOut.setOnClickListener(v-> {
+            Intent intent = new Intent(CustomerProductView.this, CheckOut.class);
+            intent.putExtra("cart", sc);
+            startActivity(intent);
+        });
     }
     @Override
     protected void onActivityResult(int requestCode,int resultCode, Intent data) {
