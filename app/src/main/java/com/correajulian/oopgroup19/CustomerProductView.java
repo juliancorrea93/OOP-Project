@@ -69,7 +69,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
                 Product p = new Product(items.get(position));
                 intent.putExtra("clicked product", p);
                 intent.putExtra("cart", sc);
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             });
             addItem.setOnClickListener(v -> {
                 Product p = new Product(items.get(position));
@@ -127,5 +127,14 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         ProductViewAdapter adapter = new ProductViewAdapter(getApplicationContext(), products);
         lv.setAdapter(adapter);
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2) {
+            sc = (ShoppingCart) data.getSerializableExtra("cart");
+            System.out.println(sc.getItemList());
+        }
     }
 }
