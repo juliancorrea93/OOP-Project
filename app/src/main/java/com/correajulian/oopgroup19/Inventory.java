@@ -3,10 +3,11 @@ package com.correajulian.oopgroup19;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Inventory {
+public class Inventory implements Serializable {
     public Inventory(Product ... p){
         items.addAll(Arrays.asList(p));
         this.saveInit();

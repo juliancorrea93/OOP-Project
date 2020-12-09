@@ -1,6 +1,8 @@
 package com.correajulian.oopgroup19;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     public Product(Product p) {
         this.product_name = p.getName();
         this.price = p.getPrice();
@@ -34,5 +36,5 @@ public class Product {
     protected final float price;
     protected final String imgpath;
     protected final String seller_name;
-    protected int quantity;
+    //protected int quantity;
 }

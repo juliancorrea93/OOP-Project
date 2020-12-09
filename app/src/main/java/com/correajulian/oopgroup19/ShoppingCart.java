@@ -1,8 +1,9 @@
 package com.correajulian.oopgroup19;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     public ShoppingCart() {
         this.items = new ArrayList<>();
         this.quantities = new ArrayList<>();
@@ -25,22 +26,41 @@ public class ShoppingCart {
 
         return products.toString();
     }
-    protected boolean addNewItem(Product product) {
+    protected boolean addNewItem(Product product, int quantity) {
         if (!this.items.isEmpty()) {
             for (int i = 0; i < this.items.size(); i++) {
-                if (this.items.get(i).getName().equals(product.getName())) {
+                if (this.items.get(i).getName().equals(product.getName()) && quantity == 1) {
                     int tmp = quantities.get(i).intValue();
                     tmp += 1;
                     quantities.set(i, tmp);
                     return true;
                 }
+                else if (this.items.get(i).getName().equals(product.getName()) && quantity > 1) {
+                    int tmp = quantities.get(i).intValue();
+                    tmp += quantity;
+                    quantities.set(i,tmp);
+                    return true;
+                }
             }
-            quantities.add(1);
-            return items.add(product);
+            //adding first
+            if (quantity > 1) {
+                quantities.add(quantity);
+                return items.add(product);
+            }
+            else{
+                quantities.add(1);
+                return items.add(product);
+            }
         }
         else {
-            quantities.add(1);
-            return items.add(product);
+            if (quantity > 1) {
+                quantities.add(quantity);
+                return items.add(product);
+            }
+            else{
+                quantities.add(1);
+                return items.add(product);
+            }
         }
     }
     private ArrayList<Product> items;

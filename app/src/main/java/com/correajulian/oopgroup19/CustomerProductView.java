@@ -22,9 +22,10 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CustomerProductView extends AppCompatActivity {
+public class CustomerProductView extends AppCompatActivity implements Serializable {
 
     private ListView lv;
     private ShoppingCart sc;
@@ -65,13 +66,14 @@ public class CustomerProductView extends AppCompatActivity {
             Button addItem = row.findViewById(R.id.addtocart);
             name.setOnClickListener(v -> {
                 Intent intent = new Intent(CustomerProductView.this ,CustomerProductPage.class);
-
-                intent.putExtra("item", items.get(position).toString());
+                Product p = new Product(items.get(position));
+                intent.putExtra("clicked product", p);
+                intent.putExtra("cart", sc);
                 startActivity(intent);
             });
             addItem.setOnClickListener(v -> {
                 Product p = new Product(items.get(position));
-                sc.addNewItem(p);
+                sc.addNewItem(p,1);
                 System.out.println(sc.getItemList());
                 Toast.makeText(getApplicationContext(), name.getText() + " has been added to cart", Toast.LENGTH_LONG).show();
             });

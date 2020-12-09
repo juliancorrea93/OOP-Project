@@ -2,8 +2,9 @@ package com.correajulian.oopgroup19;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Seller extends User {
+public class Seller extends User implements Serializable {
     public Seller(String user, String pass) {
         super(user, pass);
         loadInventory();

@@ -3,7 +3,9 @@ package com.correajulian.oopgroup19;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     public User(String user, String pass) {
         username = user;
         password = pass;
