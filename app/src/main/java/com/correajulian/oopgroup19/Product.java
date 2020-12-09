@@ -22,4 +22,5 @@ public class Product {
     private float price;
     private String imgpath;
     private String seller_name;
+    private int quantity;
 }
