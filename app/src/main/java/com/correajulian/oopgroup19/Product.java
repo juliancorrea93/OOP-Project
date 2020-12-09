@@ -15,6 +15,13 @@ public class Product implements Serializable {
         this.imgpath = path;
         this.seller_name = seller;
     }
+    public Product(String name, float value, String path, String seller, int quantity) {
+        this.product_name = name;
+        this.price = value;
+        this.imgpath = path;
+        this.seller_name = seller;
+        this.quantity = quantity;
+    }
     public float getPrice() {
         return this.price;
     }
@@ -27,6 +34,7 @@ public class Product implements Serializable {
     public String getPath() {
         return this.imgpath;
     }
+    public int getQuantity() {return this.quantity;}
     public String toString() {
         Float f = this.price;
 
@@ -36,5 +44,5 @@ public class Product implements Serializable {
     protected final float price;
     protected final String imgpath;
     protected final String seller_name;
-    //protected int quantity;
+    protected int quantity;
 }

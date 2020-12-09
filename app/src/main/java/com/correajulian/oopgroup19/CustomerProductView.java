@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,8 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -104,22 +107,23 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
 
         lv = findViewById(R.id.listView);
 
-        ArrayList<Product> products = new ArrayList<>();
+        ArrayList<Product> products;
 
         customer = (Customer) getIntent().getSerializableExtra("customer");
 
         checkOut = findViewById(R.id.checkout);
         //read in products here
-        Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
-        Product p2 = new Product("Detergent", 21, "detergent.jpg", "Amazon");
-        Product p4 = new Product("Hot Sauce", 5 , "hotsauce.jpg", "Amazon");
+        //Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
+        //Product p2 = new Product("Detergent", 21, "detergent.jpg", "Amazon");
+        //Product p4 = new Product("Hot Sauce", 5 , "hotsauce.jpg", "Amazon");
         //next shouldn't be shown
-        Product p3 = new Product("Dog", 250, "jake.jpg", "Fran Dog Breeder");
+        //Product p3 = new Product("Dog", 250, "jake.jpg", "Fran Dog Breeder");
 
-        products.add(p1);
-        products.add(p2);
-        products.add(p3);
-        products.add(p4);
+        //products.add(p1);
+        //products.add(p2);
+        //products.add(p3);
+        //products.add(p4);
+        products = getProducts();
 
         for (int i = 0; i < products.size(); i++) {
             if (!products.get(i).getSeller().equals(seller)) {
@@ -145,5 +149,27 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
             customer = (Customer) data.getSerializableExtra("customer");
             System.out.println(customer.getCartInfo());
         }
+    }
+    private ArrayList<Product> getProducts() {
+        ArrayList<Product> products = new ArrayList<>();
+
+        AssetManager am = getResources().getAssets();
+
+        try {
+            InputStream is = am.open("inventory.txt");
+            String line;
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                String[] arr = line.split(",");
+                Product p = new Product(arr[0],Float.parseFloat(arr[1]), arr[2],arr[3],Integer.parseInt(arr[4]));
+                if (p.getQuantity() > 1) {
+                    products.add(p);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return products;
     }
 }

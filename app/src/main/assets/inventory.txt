@@ -1,0 +1,4 @@
+Fridge,450,fridge.jpeg,Amazon,100
+Detergent,21,detergent.jpg,Amazon,200
+Hot Sauce,5,hotsauce.jpg,Amazon,5
+Gaming Headset,20,gamingheadset.jpg,Amazon,0

@@ -1,3 +1,2 @@
 julian1,Secret2!,0
 Amazon,somepass,1
-Fran Dog Breeder,somepass,1

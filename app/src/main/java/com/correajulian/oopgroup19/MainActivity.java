@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private void GoToCustomerView(User user) {
         Intent intent = new Intent(MainActivity.this, SelectStoreFront.class);
         user.printUserInfo();
-        intent.putExtra("user", user.toString());
+        intent.putExtra("user", new Customer(user));
         startActivity(intent);
     }
     private void GoToSellerView(User user) {
