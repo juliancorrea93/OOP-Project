@@ -50,10 +50,7 @@ public class SelectStoreFront extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_store_front);
 
-        String user = getIntent().getExtras().getString("user");
-        //user.printUserInfo();
-        String[] userinfo = user.split(",");
-        Customer customer = new Customer(userinfo);
+        Customer customer = (Customer) getIntent().getSerializableExtra("user");
         Toast.makeText(getApplicationContext(),"Welcome " + customer.getUsername() + "!", Toast.LENGTH_LONG).show();
 
         StoreFrontAdapter adapter = new StoreFrontAdapter(getApplicationContext(),getSellers());
@@ -63,6 +60,7 @@ public class SelectStoreFront extends AppCompatActivity {
             TextView name = view.findViewById(R.id.name);
             Intent intent = new Intent(SelectStoreFront.this, CustomerProductView.class);
             intent.putExtra("seller", (String)name.getText());
+            intent.putExtra("customer", customer);
             startActivity(intent);
         });
     }

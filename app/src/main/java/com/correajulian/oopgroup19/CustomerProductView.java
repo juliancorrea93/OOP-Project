@@ -30,6 +30,8 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
     private ListView lv;
     private ShoppingCart sc;
     Button checkOut;
+    Customer customer;
+    private String seller;
 
     class ProductViewAdapter extends ArrayAdapter<Product> {
         Context context;
@@ -37,6 +39,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         ArrayList<String> prices = new ArrayList<>(); // use wrapper in product if needed for String conversion
         ArrayList<String> img_names= new ArrayList<>();
         ArrayList<Product> items;
+
 
         ProductViewAdapter(Context c, ArrayList<Product> products) {
             //change arraylist products to an invertory
@@ -69,13 +72,12 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
                 Intent intent = new Intent(CustomerProductView.this ,CustomerProductPage.class);
                 Product p = new Product(items.get(position));
                 intent.putExtra("clicked product", p);
-                intent.putExtra("cart", sc);
+                intent.putExtra("customer", customer);
                 startActivityForResult(intent, 2);
             });
             addItem.setOnClickListener(v -> {
                 Product p = new Product(items.get(position));
-                sc.addNewItem(p,1);
-                System.out.println(sc.getItemList());
+                customer.addProductToCart(p,1);
                 Toast.makeText(getApplicationContext(), name.getText() + " has been added to cart", Toast.LENGTH_LONG).show();
             });
             try {
@@ -98,13 +100,14 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_product_view);
 
-        String seller = getIntent().getExtras().getString("seller");
+        seller = getIntent().getExtras().getString("seller");
 
         lv = findViewById(R.id.listView);
 
         ArrayList<Product> products = new ArrayList<>();
 
-        sc = new ShoppingCart();
+        customer = (Customer) getIntent().getSerializableExtra("customer");
+
         checkOut = findViewById(R.id.checkout);
         //read in products here
         Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
@@ -129,7 +132,8 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         lv.setAdapter(adapter);
         checkOut.setOnClickListener(v-> {
             Intent intent = new Intent(CustomerProductView.this, CheckOut.class);
-            intent.putExtra("cart", sc);
+            intent.putExtra("customer", customer);
+            intent.putExtra("seller", seller);
             startActivity(intent);
         });
     }
@@ -138,8 +142,8 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
 
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 2) {
-            sc = (ShoppingCart) data.getSerializableExtra("cart");
-            System.out.println(sc.getItemList());
+            customer = (Customer) data.getSerializableExtra("customer");
+            System.out.println(customer.getCartInfo());
         }
     }
 }

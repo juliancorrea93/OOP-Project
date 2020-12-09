@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private void GoToSellerView(User user) {
         Intent intent = new Intent(MainActivity.this, SellerMainMenu.class);
         user.printUserInfo();
-        intent.putExtra("user", user.toString());
+        intent.putExtra("user", new Customer(user));
         startActivity(intent);
     }
     private ArrayList<User> fetchUsers() {

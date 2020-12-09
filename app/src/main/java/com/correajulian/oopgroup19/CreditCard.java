@@ -13,7 +13,7 @@ public class CreditCard {
 
     public boolean Charge (ShoppingCart s, long number, String exp, int cvc) {
         if (Authenticate(number, exp, cvc)) {
-            System.out.println("Purchase Successful! Card charged $" + s.getTotal() + '.');
+            System.out.println("Purchase Successful!");
             return true;
         }
         System.out.println("Invalid credit card credentials.");

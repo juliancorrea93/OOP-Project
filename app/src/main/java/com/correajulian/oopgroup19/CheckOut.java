@@ -28,9 +28,10 @@ public class CheckOut extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
-        ShoppingCart shoppingCart = (ShoppingCart) getIntent().getSerializableExtra("cart");
-        System.out.println(shoppingCart.getItemList());
-        /*
+        //ShoppingCart shoppingCart = (ShoppingCart) getIntent().getSerializableExtra("cart");
+        Customer customer = (Customer) getIntent().getSerializableExtra("customer");
+        System.out.println(customer.getCartInfo());
+
         card_num = findViewById(R.id.custnum);
         cvc = findViewById(R.id.custcvc);
         expdate = findViewById(R.id.custexp);
@@ -40,20 +41,23 @@ public class CheckOut extends AppCompatActivity implements Serializable {
         expdate_input = findViewById(R.id.expinput);
         name_input = findViewById(R.id.nameinput);
         transaction = findViewById(R.id.transaction);
-        cartinfo.findViewById(R.id.CartInfo);
-        cartinfo.setText(shoppingCart.getItemList());
+
+        cartinfo = findViewById(R.id.CartInfo);
+
+        cartinfo.setText(customer.getCartInfo());
 
 
-        /*transaction.setOnClickListener(v -> {
+        transaction.setOnClickListener(v -> {
             try{
                 Long number = Long.parseLong(num.getText().toString());
                 Integer cvc_num = Integer.parseInt(cvc_nums.getText().toString());
                 String exp_date = expdate_input.getText().toString();
                 CreditCard card = new CreditCard(number.longValue(),exp_date, cvc_num.intValue());
-                if (card.Charge(shoppingCart, number.longValue(),exp_date, cvc_num.intValue())) {
+                if (card.Charge(customer.getCart(), number.longValue(),exp_date, cvc_num.intValue())) {
                     Toast.makeText(getApplicationContext(), "Transaction complete!", Toast.LENGTH_LONG).show();
-                    shoppingCart.clearCart();
+                    customer.clearCart();
                     Intent intent = new Intent(CheckOut.this, SelectStoreFront.class);
+                    intent.putExtra("user", customer);
                     startActivity(intent);
                 }
             }
@@ -61,10 +65,5 @@ public class CheckOut extends AppCompatActivity implements Serializable {
                 Toast.makeText(getApplicationContext(), "Make sure card number and cvc numbers are correct", Toast.LENGTH_LONG).show();
             }
         });
-
-         */
-
-
-
     }
 }

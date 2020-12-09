@@ -22,12 +22,13 @@ public class CustomerProductPage extends AppCompatActivity implements Serializab
     private TextView tv;
     private Button addtoCart;
     private ImageView img;
+    private Customer customer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_product_page);
-        cart = (ShoppingCart) getIntent().getSerializableExtra("cart");
+        customer = (Customer) getIntent().getSerializableExtra("customer");
         product = (Product) getIntent().getSerializableExtra("clicked product");
 
         edit = findViewById(R.id.qty);
@@ -53,10 +54,10 @@ public class CustomerProductPage extends AppCompatActivity implements Serializab
                     Toast.makeText(getApplicationContext(), "Please input an integer equal to, or greater than 1", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    cart.addNewItem(product, i);
-                    //make Toast msg to say added to cart
+                    customer.addProductToCart(product, i);
+                    Toast.makeText(getApplicationContext(), "Items added to cart", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
-                    intent.putExtra("cart", cart);
+                    intent.putExtra("customer", customer);
                     setResult(2, intent);
                     finish();
                 }
