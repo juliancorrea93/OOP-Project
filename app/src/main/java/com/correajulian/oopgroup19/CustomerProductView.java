@@ -112,17 +112,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
         customer = (Customer) getIntent().getSerializableExtra("customer");
 
         checkOut = findViewById(R.id.checkout);
-        //read in products here
-        //Product p1 = new Product("Fridge", 450, "fridge.jpeg", "Amazon");
-        //Product p2 = new Product("Detergent", 21, "detergent.jpg", "Amazon");
-        //Product p4 = new Product("Hot Sauce", 5 , "hotsauce.jpg", "Amazon");
-        //next shouldn't be shown
-        //Product p3 = new Product("Dog", 250, "jake.jpg", "Fran Dog Breeder");
 
-        //products.add(p1);
-        //products.add(p2);
-        //products.add(p3);
-        //products.add(p4);
         products = getProducts();
 
         for (int i = 0; i < products.size(); i++) {
