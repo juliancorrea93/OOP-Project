@@ -62,8 +62,8 @@ public class Inventory implements Serializable {
         } catch (IOException e) {}
     }
 
-    private void updateInventory(ArrayList<Product> purchase, ArrayList<Integer> quantities) {
-
+    public ArrayList<Product> getInventory() {
+        return this.items;
     }
 
     public File getFile(){

@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 public class CustomerProductPage extends AppCompatActivity implements Serializable {
-    private ShoppingCart cart;
     private Product product;
     private EditText edit;
     private TextView tv;

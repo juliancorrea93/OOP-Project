@@ -68,6 +68,7 @@ public class ShoppingCart implements Serializable {
         items.clear();
         quantities.clear();
     }
+
     private ArrayList<Product> items;
     private ArrayList<Integer> quantities;
 }

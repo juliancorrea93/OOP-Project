@@ -23,15 +23,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SellerMainMenu extends AppCompatActivity {
+public class SellerMainMenu extends AppCompatActivity implements Serializable {
     private ListView lv;
     private Seller seller;
     class InventoryAdapter extends ArrayAdapter {
         Context context;
         ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> prices = new ArrayList<>(); // use wrapper in product if needed for String conversion
+        ArrayList<String> quantities = new ArrayList<>(); // use wrapper in product if needed for String conversion
         ArrayList<String> img_names= new ArrayList<>();
         ArrayList<Product> items;
         InventoryAdapter(Context c, ArrayList<Product> products) {
@@ -45,8 +46,8 @@ public class SellerMainMenu extends AppCompatActivity {
                 this.names.add(products.get(i).getName());
             }
             for (int i = 0; i < products.size(); i++) {
-                Float f = products.get(i).getPrice();
-                this.prices.add(f.toString());
+                Integer integer = products.get(i).getQuantity();
+                this.quantities.add(integer.toString());
             }
         }
         @NonNull
@@ -73,7 +74,7 @@ public class SellerMainMenu extends AppCompatActivity {
                 System.out.println("Image failed to load");
             }
             name.setText(names.get(position));
-            price.setText(prices.get(position));
+            price.setText(quantities.get(position));
 
             return row;
         }
@@ -87,12 +88,23 @@ public class SellerMainMenu extends AppCompatActivity {
 
         System.out.println("We are in the seller main menu");
         seller = (Seller) getIntent().getSerializableExtra("seller");
-        //Inventory inventory = new Inventory(getProducts());
+        Inventory inventory = new Inventory(getProducts());
         lv = findViewById(R.id.listview_seller);
 
+        InventoryAdapter adapter = new InventoryAdapter(getApplicationContext(),inventory.getInventory());
 
+        lv.setAdapter(adapter);
     }
-    private ArrayList<Product> getProducts() {
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2) {
+            seller = (Seller) data.getSerializableExtra("seller");
+            //quantities updated
+        }
+    }
+    private Product[] getProducts() {
         ArrayList<Product> products = new ArrayList<>();
 
         AssetManager am = getResources().getAssets();
@@ -112,6 +124,12 @@ public class SellerMainMenu extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        return products;
+        Product[] p = new Product[products.size()];
+
+        for (int i = 0; i < products.size(); i++) {
+            p[i] = products.get(i);
+        }
+
+        return p;
     }
 }
