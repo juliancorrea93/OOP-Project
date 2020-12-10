@@ -14,6 +14,10 @@ public class Seller extends User implements Serializable {
         super(userinfo);
         loadInventory();
     }
+    public Seller(User u) {
+        super(u);
+        loadInventory();
+    }
 
     public void addProduct(Product p){
         items.addProduct(p);
@@ -44,7 +48,7 @@ public class Seller extends User implements Serializable {
                 }
             }
             for(int i = 0; i < strs1.length; i++){
-                Product p = new Product(strs1[i][0], Float.parseFloat(strs1[i][0]), strs1[i][0], strs1[i][0]);
+                Product p = new Product(strs1[i][0], Float.parseFloat(strs1[i][0]), strs1[i][0], strs1[i][0], Integer.parseInt(strs1[i][0]));
                 items.addProduct(p);
             }
         } catch (IOException e) {}

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 public class CustomerProductView extends AppCompatActivity implements Serializable {
 
     private ListView lv;
-    private ShoppingCart sc;
     Button checkOut;
     Customer customer;
     private String seller;
