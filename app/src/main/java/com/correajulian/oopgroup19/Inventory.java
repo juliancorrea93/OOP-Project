@@ -1,8 +1,13 @@
 package com.correajulian.oopgroup19;
 
+import android.content.Context;
+import android.os.Environment;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +65,37 @@ public class Inventory implements Serializable {
                 wr.close();
             }
         } catch (IOException e) {}
+    }
+
+    /**
+     * Updatese the inventory file
+     * @param purchase
+     * @param quantities
+     */
+    public void updateInventory(ArrayList<Product> purchase, ArrayList<Integer> quantities, ArrayList<Product> all, Context c) throws IOException {
+        ArrayList<String> prodstrings = new ArrayList<>();
+        for (int i = 0; i < purchase.size(); i++) {
+            for (int j = 0; j < items.size(); j++) {
+                if (items.get(j).equals(purchase.get(i))) {
+                    System.out.println(items.get(j).getQuantity());
+                    System.out.println(quantities.get(i));
+                    items.get(j).setQuantity(items.get(j).getQuantity() - quantities.get(i));
+                    prodstrings.add(items.get(j).toString());
+                }
+                else {
+                    prodstrings.add(items.get(j).toString());
+                }
+            }
+        }
+        //saveInit();
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(c.openFileOutput("inventory.txt", Context.MODE_PRIVATE));
+
+
+        for (String str: prodstrings) {
+            System.out.println(str);
+            outputStreamWriter.write(str + System.lineSeparator());
+        }
+        outputStreamWriter.close();
     }
 
     public ArrayList<Product> getInventory() {

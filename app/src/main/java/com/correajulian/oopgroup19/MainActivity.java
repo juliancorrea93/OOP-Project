@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private String name;
     private String psword;
     private Button login;
-    private Button signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         pass = findViewById(R.id.password);
 
         login = findViewById(R.id.login);
-        signup = findViewById(R.id.signup);
 
         login.setOnClickListener(v -> {
             name = user.getText().toString();
@@ -50,11 +48,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
-
-        signup.setOnClickListener(v -> {
-            System.out.println("Signup goes here");
-            //TODO: priority Low, only do if rest of app is working
         });
     }
     private void GoToCustomerView(User user) {

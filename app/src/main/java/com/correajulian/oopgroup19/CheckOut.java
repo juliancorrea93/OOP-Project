@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CheckOut extends AppCompatActivity implements Serializable {
     TextView card_num;
@@ -22,6 +24,7 @@ public class CheckOut extends AppCompatActivity implements Serializable {
     EditText name_input;
     Button transaction;
     TextView cartinfo;
+    ArrayList<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class CheckOut extends AppCompatActivity implements Serializable {
 
         //ShoppingCart shoppingCart = (ShoppingCart) getIntent().getSerializableExtra("cart");
         Customer customer = (Customer) getIntent().getSerializableExtra("customer");
+        products = (ArrayList<Product>) getIntent().getSerializableExtra("products");
         System.out.println(customer.getCartInfo());
 
         card_num = findViewById(R.id.custnum);
@@ -54,6 +58,21 @@ public class CheckOut extends AppCompatActivity implements Serializable {
                 String exp_date = expdate_input.getText().toString();
                 CreditCard card = new CreditCard(number.longValue(),exp_date, cvc_num.intValue());
                 if (card.Charge(customer.getCart(), number.longValue(),exp_date, cvc_num.intValue())) {
+                    Product[] p = new Product[customer.getCart().getItems().size()];
+
+                    for (int i = 0; i < customer.getCart().getItems().size(); i++) {
+
+                        for (Product item : products) {
+                            if (item.equals((Product) customer.getCart().getItems().get(i))) {
+                                p[i] = item;
+                            }
+                        }
+                        p[i] = products.get(i);
+                    }
+                    Inventory i = new Inventory(p);
+                    i.updateInventory(customer.getCart().getItems(), customer.getCart().getQuantities(), products, getApplicationContext());
+
+
                     Toast.makeText(getApplicationContext(), "Transaction complete!", Toast.LENGTH_LONG).show();
                     customer.clearCart();
                     Intent intent = new Intent(CheckOut.this, SelectStoreFront.class);
@@ -63,6 +82,9 @@ public class CheckOut extends AppCompatActivity implements Serializable {
             }
             catch (NumberFormatException e) {
                 Toast.makeText(getApplicationContext(), "Make sure card number and cvc numbers are correct", Toast.LENGTH_LONG).show();
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
     }

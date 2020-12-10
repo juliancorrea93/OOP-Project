@@ -4,10 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ShoppingCart implements Serializable {
+    /**
+     * initializes new shopping cart
+     */
     public ShoppingCart() {
         this.items = new ArrayList<>();
         this.quantities = new ArrayList<>();
     }
+    /**
+     * @return summation of products in cart
+     */
     public float getTotal() {
         float total = 0;
         for (int i = 0; i < this.items.size(); i++) {
@@ -15,7 +21,9 @@ public class ShoppingCart implements Serializable {
         }
         return total;
     }
-    //TODO: Revise method to include quantity or compare Product strings, probably best to compare product Strings
+    /**
+     * @return string representation of the cart
+     */
     public String getItemList() {
         ArrayList<String> products = new ArrayList<>();
 
@@ -27,6 +35,12 @@ public class ShoppingCart implements Serializable {
 
         return products.toString() + "\nTotal: $" + f.toString();
     }
+    /**
+     * add product to cart
+     * @param product exiting product
+     * @param quantity number of that product
+     * @return true if item was added
+     */
     protected boolean addNewItem(Product product, int quantity) {
         if (!this.items.isEmpty()) {
             for (int i = 0; i < this.items.size(); i++) {
@@ -64,9 +78,28 @@ public class ShoppingCart implements Serializable {
             }
         }
     }
+    /**
+     * empties cart
+     */
     public void clearCart() {
         items.clear();
         quantities.clear();
+    }
+
+    /**
+     * Gets cart items
+     * @return
+     */
+    public ArrayList getItems() {
+        return items;
+    }
+
+    /**
+     * Gets quantities for cart items
+     * @return
+     */
+    public ArrayList getQuantities() {
+        return quantities;
     }
 
     private ArrayList<Product> items;

@@ -127,6 +127,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
             Intent intent = new Intent(CustomerProductView.this, CheckOut.class);
             intent.putExtra("customer", customer);
             intent.putExtra("seller", seller);
+            intent.putExtra("products", products);
             startActivity(intent);
         });
     }
@@ -151,6 +152,7 @@ public class CustomerProductView extends AppCompatActivity implements Serializab
             while ((line = br.readLine()) != null) {
                 String[] arr = line.split(",");
                 Product p = new Product(arr[0],Float.parseFloat(arr[1]), arr[2],arr[3],Integer.parseInt(arr[4]));
+                System.out.println((Integer.parseInt(arr[4])));
                 if (p.getQuantity() > 1) {
                     products.add(p);
                 }
